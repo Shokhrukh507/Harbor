@@ -25,9 +25,14 @@ jobs:
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
-      - name: Deploy Grafana Helm Chart
+      - name: Install Helm
         run: |
-          kubectl create namespace grafana || true
-          helm upgrade --install grafana-release \
-            --namespace grafana \
-            https://github.com/your-username/grafana-chart/releases/latest/download/grafana-chart.tgz
+           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+           chmod +x get_helm.sh
+           ./get_helm.sh
+
+      - name: Deploy Helm Chart
+        run: |
+          helm repo add harbor https://helm.goharbor.io
+          helm uninstall my-harbor
+          helm install my-harbor harbor/harbor --version 1.14.0 -n harbor
