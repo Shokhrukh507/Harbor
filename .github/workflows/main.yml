@@ -33,6 +33,6 @@ jobs:
 
       - name: Deploy Harbor Helm Chart
         run: |
-          kubectl create namespace harbor || true
-          helm repo add harbor https://helm.goharbor.io \
-          helm install my-harbor harbor/harbor --version 1.14.0
+           kubectl create namespace harbor || true
+           helm repo add harbor https://helm.goharbor.io
+           helm install my-harbor harbor/harbor --version 1.14.0
