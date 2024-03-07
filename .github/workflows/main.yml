@@ -31,8 +31,8 @@ jobs:
            chmod +x get_helm.sh
            ./get_helm.sh
 
-      - name: Deploy Helm Chart
+      - name: Deploy Harbor Helm Chart
         run: |
-          helm repo add harbor https://helm.goharbor.io
-          helm uninstall my-harbor
-          helm install my-harbor harbor/harbor --version 1.14.0 -n harbor
+          kubectl create namespace harbor || true
+          helm repo add harbor https://helm.goharbor.io \
+          helm install my-harbor harbor/harbor --version 1.14.0
